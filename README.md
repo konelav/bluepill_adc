@@ -9,11 +9,11 @@ interface. It supposed to be run on so-called [bluepill] widely
 available board that has [stm32f10x] on it. This project based on
 [bluepill_ch341a] as a template.
 
-USB protocol is made as simple as possible with just two endpoints,
+USB protocol made as simple as possible with just two endpoints,
 one for configuring (EP0) and one for analog data acquisition (EP1,
 bulk type).
 Each usb packet contains minimal header that helps to parse its
-contents without knowing full device configuration, i.e. one
+contents without knowing full device configuration, i.e. user
 could just plug the device and start grab data from EP1.
 
 
@@ -21,7 +21,7 @@ Features
 --------
 
   - up to 10 channels;
-  - selectable resolution (12/8/4/2 bit per sample);
+  - selectable resolution (12/8/4/2 bits per sample);
   - selectable sample rate (up to ~1.7 MHz);
   - singleshot/continuous mode;
   - triggers (rising edge, falling edge, strobe duration);
@@ -34,7 +34,7 @@ Performance
 -----------
 
 To achieve best possible performance, both ADCs are used for
-acquisition is possible. Low (2/4/8) bit resolutions are implemented for
+acquisition if possible. Low (2/4/8) bit resolutions are implemented for
 reduction of throughtput requirements and prevention of packets loss.
 
 In terms of stm32f10x reference manual, modes of ADCs are selected as
@@ -43,18 +43,18 @@ follows:
   - for single channel and maximum frequency: ADC1+ADC2 in 
     *Fast interleaved mode*;
   - for single channel and less than maximum frequency: ADC1 only;
-  - for more than one channel: ADC1+ADC2 in *Dual mode*.
+  - for more than one channel: ADC1+ADC2 in *Regular simultaneous mode*.
 
 Unfortunately, it is not possible to achieve 1 megasample per second
-per ADC acquisition rate (theretical maximum for stm32f1xx family with
+per ADC acquisition rate (theoretical maximum for stm32f1xx family with
 1us minimum conversion time), because it requires 14 MHz ADC clock,
 which is not a divisor of 48/72 MHz strictly needed for working USB and
 hence is not achievable.
 The only workaround I can imagine is changing clocking setup (divisors)
-at runtime so in any given moment either ADC(s) work(s) and store(s)
+at runtime so at any time either ADC(s) work(s) and store(s)
 data, or USB works and transfers data, then they swap and so on. But this
 way is much harder to implement and it leads to that the device will
-be permanently connected/disconnected to/from USB host.
+be permanently connects/disconnects to/from USB host.
 In this project 72 MHz SYSCLK used that gives 12 MHz ADC maximum,
 hence 1.17 us minimum sample+conversion time and 857143 samples per
 second per each of two ADCs.
@@ -134,7 +134,7 @@ B11 | CONSOLE    | Receiver of commads (RX, this is *input* of MCU)
 Protocol: configuring
 ---------------------
 
-There is a bunch of 8-bit *registers* available for writing by nodata
+There is a set of 8-bit *registers* available for writing by nodata
 setup packets:
 ```
 bmRequestType = 0x40
