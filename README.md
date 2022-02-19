@@ -83,24 +83,24 @@ lowest possible 2-bits resolution.
 Examples of achievable sampling rates (all data for parameter 
 `FREQUENCY = 1`, see below):
 
-Number of channels | Bits per sample | Max rate (ADC)  | Min rate (USB)
------------------------------------------------------------------------
-          1        |       12        |   1714 kS/s     |    406 kS/s
-          1        |        8        |   1714 kS/s     |    700 kS/s
-          1        |        4        |   1714 kS/s     |   1300 kS/s
-          1        |        2        |   1714 kS/s     |   1714 kS/s
-          2        |       12        |    857 kS/s     |    211 kS/s
-          2        |        8        |    857 kS/s     |    326 kS/s
-          2        |        4        |    857 kS/s     |    644 kS/s
-          2        |        2        |    857 kS/s     |    857 kS/s
-          4        |       12        |    428 kS/s     |    106 kS/s
-          4        |        8        |    428 kS/s     |    165 kS/s
-          4        |        4        |    428 kS/s     |    330 kS/s
-          4        |        2        |    428 kS/s     |    428 kS/s
-         10        |       12        |    171 kS/s     |     44 kS/s
-         10        |        8        |    171 kS/s     |     68 kS/s
-         10        |        4        |    171 kS/s     |    140 kS/s
-         10        |        2        |    171 kS/s     |    171 kS/s
+Number of channels | Bits per sample | Max rate - ADC  | Min rate - USB
+-------------------|-----------------|-----------------|---------------
+1                  |       12        |   1714 kS/s     |    406 kS/s
+1                  |        8        |   1714 kS/s     |    700 kS/s
+1                  |        4        |   1714 kS/s     |   1300 kS/s
+1                  |        2        |   1714 kS/s     |   1714 kS/s
+2                  |       12        |    857 kS/s     |    211 kS/s
+2                  |        8        |    857 kS/s     |    326 kS/s
+2                  |        4        |    857 kS/s     |    644 kS/s
+2                  |        2        |    857 kS/s     |    857 kS/s
+4                  |       12        |    428 kS/s     |    106 kS/s
+4                  |        8        |    428 kS/s     |    165 kS/s
+4                  |        4        |    428 kS/s     |    330 kS/s
+4                  |        2        |    428 kS/s     |    428 kS/s
+10                 |       12        |    171 kS/s     |     44 kS/s
+10                 |        8        |    171 kS/s     |     68 kS/s
+10                 |        4        |    171 kS/s     |    140 kS/s
+10                 |        2        |    171 kS/s     |    171 kS/s
 
 
 Configuring, building, flashing
@@ -159,7 +159,7 @@ lower index.
 At the moment parameters are as follows:
 
 Parameter   | Number of bytes | Index of low byte
--------------------------------------------------
+------------|-----------------|------------------
 CMD         | 1               | 1
 CHANNELS    | 2               | 2
 BITS        | 1               | 4
@@ -179,7 +179,7 @@ USE_CHANNELS| 2               | 26
 Parameter `CMD` describes current acquisition behaviour:
 
 `CMD` value | Mnemonic  | Meaning
-----------------------------------------
+------------|-----------|---------------
 0           | STOP      | No acquisition 
 1           | ONCE      | Single acquisition of `SAMPLES` samples after start/trigger
 2           | CONTINUOUS| Automatically restart or wait trigger after `SAMPLES` samples
@@ -205,9 +205,8 @@ section.
 Parameter `FREQUENCY` describes acquisition speed (total samples per
 second by each ADC, *not* the sample rate for each separate channel):
 
-  `FREQUENCY`     | Frequency of  | Rate if 1 chan | Rate if `N > 1`
-     value        |  each ADC     |   selected     | chans selected
----------------------------------------------------------------------
+`FREQUENCY` value | Frequency of each ADC | Rate if 1 chan selected | Rate if `N > 1`chans selected
+------------------|---------------|----------------|-----------------
 0                 | 0             | 0              | 0
 1                 | 857143        | 1714286        | `857143*2/N`
 2                 | 500000        | 500000         | `500000*2/N`
@@ -234,7 +233,7 @@ after start/trigger. Number of samples is counted as:
 Parameter `TRIGGER` describes when data acquisition and transfer starts.
 
 `TRIGGER` value | Mnemonic  | When acquisition starts
------------------------------------------------------
+----------------|-----------|------------------------
 0               | NONE      | As soon as possible
 1               | RISING    | On rising edge (level goes from low to high)
 2               | FALLING   | On falling edge (level goes from high to low)
@@ -348,6 +347,7 @@ provided in Releases.
       are required; simple script for udev is in
       srcipts/make_udev_rules.sh (or just `make udev_rules`).
 
+[GUI screenshot example](gui/bluepill_adc_gui.png)
 
 Issues and notes
 ----------------
