@@ -2,7 +2,6 @@ obj
 *.elf
 *.bin
 #*.hex
-*.py
 *.log
 build
 *.txt
